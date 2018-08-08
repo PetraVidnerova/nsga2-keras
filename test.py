@@ -13,19 +13,25 @@ from nsga2_config import NSGA2_Cfg
 if __name__ == '__main__':
 
     config_name = sys.argv[1] 
-    if config_name is not None:
-        load_config(config_name)
-    
-    Config.input_shape = NSGA2_Cfg.input_shape 
-    Config.noutputs = NSGA2_Cfg.noutputs
 
+    if config_name is not None:
+        NSGA2_Cfg.load(config_name)
+
+    # copy attributes from NSGA2_Cfg to Config 
+    for key in [attr for attr in dir(NSGA2_Cfg) if not attr.startswith('__')]:
+        val = getattr(NSGA2_Cfg, key)
+        setattr(Config, key, val)
+
+        
     nsga2 = NSGAII(num_objectives=2, mutation_rate=0.1, crossover_rate=1.0)
     
     P = []
-    for i in range(20):
+    for i in range(2):
         P.append(KerasSolution())
-
-    popsize = 20
+        
+    #TODO: evaluate fitness here 
+        
+    popsize = 2
     num_generations = 100
     nsga2.run(P, popsize, num_generations)
 
