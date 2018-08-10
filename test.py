@@ -26,13 +26,14 @@ if __name__ == '__main__':
     nsga2 = NSGAII(num_objectives=2, mutation_rate=0.1, crossover_rate=1.0)
     
     P = []
-    for i in range(10):
+    for i in range(20):
         P.append(KerasSolution())
         
     
-    popsize = 10
+    popsize = 20
     num_generations = 10
     nsga2.run(P, popsize, num_generations)
 
-    
+    for ind in P:
+        print(ind.objectives[0], ind.objectives[1])
    
