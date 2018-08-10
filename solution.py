@@ -33,6 +33,10 @@ class KerasSolution(Solution):
         self.uptodate = False
             
         #self.evaluate_solution()
+
+    def set_objectives(self, obj):
+        self.objectives = obj
+        self.uptodate = True
         
     def evaluate_solution(self):
         '''
@@ -43,15 +47,14 @@ class KerasSolution(Solution):
        	   print("UP TO DATE") 
            return 
 
-        print("evaluate solution")
-        
-        self.objectives[0] = fit.evaluate(self.network)
+                
+        self.objectives[0] = - fit.evaluate(self.network)[0]
 
-        #TODO: fix, the createNetwork is called twice each evaluation
-        net = self.network.createNetwork()
-        self.objectives[1] =  net.count_params()
-        
+        self.objectives[1] =  self.network.nparams / 1000
+                
         self.uptodate = True
+
+        return self.objectives 
         
     def crossover(self, other):
         '''
