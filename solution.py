@@ -32,7 +32,7 @@ class KerasSolution(Solution):
 
         self.uptodate = False
             
-        self.evaluate_solution()
+        #self.evaluate_solution()
         
     def evaluate_solution(self):
         '''
@@ -40,7 +40,8 @@ class KerasSolution(Solution):
         '''
 
         if self.uptodate:
-            return 
+       	   print("UP TO DATE") 
+           return 
 
         print("evaluate solution")
         

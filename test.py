@@ -26,13 +26,12 @@ if __name__ == '__main__':
     nsga2 = NSGAII(num_objectives=2, mutation_rate=0.1, crossover_rate=1.0)
     
     P = []
-    for i in range(2):
+    for i in range(10):
         P.append(KerasSolution())
         
-    #TODO: evaluate fitness here 
-        
-    popsize = 2
-    num_generations = 100
+    
+    popsize = 10
+    num_generations = 10
     nsga2.run(P, popsize, num_generations)
 
     
