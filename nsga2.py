@@ -36,7 +36,7 @@ class Solution:
         self.objectives = []
         for _ in range(num_objectives):
             self.objectives.append(None)
-        self.attributes = []
+        #self.attributes = []
         self.rank = sys.maxsize
         self.distance = 0.0
         
