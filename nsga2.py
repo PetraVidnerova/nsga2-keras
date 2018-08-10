@@ -20,11 +20,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-modified-by Petra Vidnerová, August 2018
+modified-by Petra Vidnerova, August 2018
 '''
 
 import sys, random
 import pickle
+import datetime 
 from multiprocessing import Pool
 
 from nsga2_config import NSGA2_Cfg
