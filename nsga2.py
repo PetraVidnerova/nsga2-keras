@@ -19,9 +19,16 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+modified-by Petra Vidnerová, August 2018
 '''
 
 import sys, random
+import pickle
+from multiprocessing import Pool
+
+from nsga2_config import NSGA2_Cfg
+
 
 class Solution:
     '''
@@ -113,6 +120,7 @@ class NSGAII:
         self.num_objectives = num_objectives
         self.mutation_rate = mutation_rate
         self.crossover_rate = crossover_rate
+        self.pool = Pool(NSGA2_Cfg.processors)
         
         random.seed(64);
         
@@ -120,12 +128,25 @@ class NSGAII:
         '''
         Run NSGA-II. 
         '''
-        for s in P:
-            s.evaluate_solution()
+
+        # get start time 
+        start_time = datetime.datetime.now()
+
+        objs = self.pool.map(eval_sol, P)
+        for s, o in zip(P, objs):
+            s.set_objectives(o)
+
+        
+        #for s in P:
+        #    s.evaluate_solution()
         
         Q = []
         
         for i in range(num_generations):
+            # print objectives 
+            for s in P:
+                print(s.objectives[0], s.objectives[1])
+           
             print("Iteracao ", i)
              
             R = []
@@ -150,8 +171,22 @@ class NSGAII:
             
             if len(P) > population_size:
                 del P[population_size:]
+
+            # save P
+            cp = dict(population=P, generation=i, rngstate=random.getstate())
+            cp_name = "checkpoint_nsga2.pkl"
+            with open(cp_name, "wb") as file:
+                pickle.dump(cp, file)                 
+
+            total_time = datetime.datetime.now() - start_time
+            if total_time > datetime.timedelta(hours=8*24):
+                print("Time limit exceeded.")
+                return 
+
+                
                 
             Q = self.make_new_pop(P)
+            
             
     def sort_ranking(self, P):
         for i in range(len(P) - 1, -1, -1):
@@ -211,10 +246,17 @@ class NSGAII:
                 if random.random() < self.mutation_rate:
                     child_solution.mutate()
                     
-                child_solution.evaluate_solution()
+                #child_solution.evaluate_solution()
                 
                 Q.append(child_solution)
-        
+
+        objs = self.pool.map(eval_sol, Q)
+        for s, o in zip(Q, objs):
+            s.set_objectives(o)
+
+        #for s in Q:
+        #    s.evaluate_solution()
+                
         return Q
         
     def fast_nondominated_sort(self, P):
@@ -276,3 +318,8 @@ class NSGAII:
             
             for i in range(1, len(front) - 1):
                 front[i].distance += (front[i + 1].distance - front[i - 1].distance)
+
+
+# auxiliary function
+def eval_sol(x):
+    return x.evaluate_solution()
