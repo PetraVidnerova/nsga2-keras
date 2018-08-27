@@ -1,4 +1,5 @@
 from nsga2 import Solution
+import copy
 
 # imports from GAKeras (add GAKeras directory to PYTHONPATH)
 from convindividual import ConvIndividual
@@ -24,6 +25,8 @@ class KerasSolution(Solution):
         '''
         Solution.__init__(self, 2)
 
+        #print("KerasSolution constructor")
+        
         if network is None:
             self.network = ConvIndividual()
             self.network.randomInit()
@@ -43,15 +46,15 @@ class KerasSolution(Solution):
         Implementation of method evaluate_solution() as call for GAKeras fitness function.
         '''
 
+
         if self.uptodate:
-       	   print("UP TO DATE") 
-           return 
+       	    print("UP TO DATE") 
+            return self.objectives
 
                 
         self.objectives[0] = - fit.evaluate(self.network)[0]
+        self.objectives[1] =  self.network.nparams
 
-        self.objectives[1] =  self.network.nparams / 1000
-                
         self.uptodate = True
 
         return self.objectives 
@@ -61,14 +64,17 @@ class KerasSolution(Solution):
         Crossover.
         '''
         # cxOnePoint returns two children, get the first one
-        child =  crossover.cxOnePoint(self.network, other.network)[0] 
+        net1 = copy.deepcopy(self.network)
+        net2 = copy.deepcopy(other.network)
+        child =  crossover.cxOnePoint(net1, net2)[0] 
         return KerasSolution(child)
         
     def mutate(self):
         '''
         Mutation.
         '''
-        child = mutation.mutate(self.network)
+        child_network = copy.deepcopy(self.network)
+        child = mutation.mutate(child_network)[0]
         return KerasSolution(child)
 
     
