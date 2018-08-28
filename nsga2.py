@@ -148,8 +148,12 @@ class NSGAII:
             for s in P:
                 print(s.objectives[0], s.objectives[1])
            
+<<<<<<< HEAD
             print("Iteracao ", i)
             sys.stdout.flush()
+=======
+            print("Iteracao ", i, flush=True)
+>>>>>>> 140e4278e2558a0606284bb40f0de98b2797f77f
              
             R = []
             R.extend(P)
@@ -244,9 +248,9 @@ class NSGAII:
             
             if random.random() < self.crossover_rate:
                 child_solution = selected_solutions[0].crossover(selected_solutions[1])
-                
+                                
                 if random.random() < self.mutation_rate:
-                    child_solution.mutate()
+                    child_solution = child_solution.mutate()
                     
                 #child_solution.evaluate_solution()
                 

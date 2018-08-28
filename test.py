@@ -30,10 +30,9 @@ if __name__ == '__main__':
         P.append(KerasSolution())
         
     
-    popsize = 20
-    num_generations = 100
+    popsize = NSGA2_Cfg.popsize
+    num_generations = NSGA2_Cfg.generations
     nsga2.run(P, popsize, num_generations)
 
     for ind in P:
         print(ind.objectives[0], ind.objectives[1])
-   
