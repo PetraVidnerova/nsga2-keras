@@ -5,9 +5,9 @@ import re
 class NSGA2_Config():
 
     def __init__(self):
-        self.train_name = "data/digits.train"
-        self.test_name = "data/digits.train"
-        self.input_shape = (8, 8, 1)
+        self.train_name = "data/mnist2d.train"
+        self.test_name = "data/mnist2d.test"
+        self.input_shape = (28, 28, 1)
         self.noutputs = 10
 
     def load(self, filename):

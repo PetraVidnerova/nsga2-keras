@@ -148,6 +148,7 @@ class NSGAII:
             for s in P:
                 print(s.objectives[0], s.objectives[1])
            
+
             print("Iteracao ", i, flush=True)
              
             R = []
@@ -175,7 +176,7 @@ class NSGAII:
 
             # save P
             cp = dict(population=P, generation=i, rngstate=random.getstate())
-            cp_name = "checkpoint_nsga2.pkl"
+            cp_name = "checkpoint_nsga2_{}.pkl".format(NSGA2_Cfg.id)
             with open(cp_name, "wb") as file:
                 pickle.dump(cp, file)                 
 
