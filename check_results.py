@@ -45,16 +45,18 @@ if __name__ == "__main__":
 
     pop = cp["population"]
 
+    
 
     index = sys.argv[3] 
     if index is None:
         raise Exception("no index") 
 
-    ind = pop[index]
+    ind = pop[int(index)]
     # print individual
     print(ind.objectives)
     print(ind.network)
 
+    
     # load data 
     X_train, y_train = load_data(NSGA2_Cfg.train_name)
     X_test, y_test = load_data(NSGA2_Cfg.test_name)
@@ -75,4 +77,4 @@ if __name__ == "__main__":
 
     print("E_train: {}".format(E_train))
     print("E_test: {}".format(E_test))
-    
+
