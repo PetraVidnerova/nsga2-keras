@@ -148,12 +148,8 @@ class NSGAII:
             for s in P:
                 print(s.objectives[0], s.objectives[1])
            
-<<<<<<< HEAD
-            print("Iteracao ", i)
-            sys.stdout.flush()
-=======
+
             print("Iteracao ", i, flush=True)
->>>>>>> 140e4278e2558a0606284bb40f0de98b2797f77f
              
             R = []
             R.extend(P)
