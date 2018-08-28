@@ -31,7 +31,7 @@ if __name__ == '__main__':
         
     
     popsize = 20
-    num_generations = 10
+    num_generations = 100
     nsga2.run(P, popsize, num_generations)
 
     for ind in P:
