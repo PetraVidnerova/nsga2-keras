@@ -6,6 +6,7 @@ class NSGA2_Config():
 
     def __init__(self):
         self.train_name = "data/digits.train"
+        self.test_name = "data/digits.train"
         self.input_shape = (8, 8, 1)
         self.noutputs = 10
 
