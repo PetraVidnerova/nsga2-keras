@@ -45,9 +45,11 @@ if __name__ == "__main__":
 
     pop = cp["population"]
 
-    
+    for i, ind in  enumerate(pop):
+        print(i, ":", ind.objectives)
 
-    index = sys.argv[3] 
+
+    index = input()
     if index is None:
         raise Exception("no index") 
 
