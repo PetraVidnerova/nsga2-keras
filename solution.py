@@ -52,8 +52,11 @@ class KerasSolution(Solution):
             return self.objectives
 
                 
-        self.objectives[0] = - fit.evaluate(self.network)[0]
-        self.objectives[1] =  self.network.nparams
+        self.objectives[0] = - 100 * fit.evaluate(self.network)[0]
+        if self.objectives[0] > - 97:
+            self.objectives[0] = 0
+
+        self.objectives[1] =  self.network.nparams // 1000
 
         self.uptodate = True
 
